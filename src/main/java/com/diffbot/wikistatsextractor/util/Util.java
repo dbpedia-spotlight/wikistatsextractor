@@ -49,7 +49,7 @@ public class Util {
 		String patternStr = "<text.*xml:space=\"preserve\">";
 		Pattern patternIndex = Pattern.compile(patternStr);
 		Matcher matcherIndex = patternIndex.matcher(page);
-		//int index_text = page.indexOf("<text xml:space=\"preserve\">");
+		//old pattern version: int index_text = page.indexOf("<text xml:space=\"preserve\">");
 		int index_text = -1;
 		String preserve = "";
 		if(matcherIndex.find()) {
