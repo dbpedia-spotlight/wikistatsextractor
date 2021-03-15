@@ -6,6 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
  /** some Utils methods */
 public class Util {
@@ -44,10 +46,21 @@ public class Util {
 		}
 
 		/** go to the index of the text */
-		int index_text = page.indexOf("<text xml:space=\"preserve\">");
+		String patternStr = "<text.*xml:space=\"preserve\">";
+		Pattern patternIndex = Pattern.compile(patternStr);
+		Matcher matcherIndex = patternIndex.matcher(page);
+		//old pattern version: int index_text = page.indexOf("<text xml:space=\"preserve\">");
+		int index_text = -1;
+		String preserve = "";
+		if(matcherIndex.find()) {
+			index_text = matcherIndex.start();
+			preserve = page.substring(index_text,matcherIndex.end());
+			//System.out.println(preserve + "...");
+		}
 		if (index_text == -1)
 			return null;
-		index_text += "<text xml:space=\"preserve\">".length();
+		//index_text += "<text xml:space=\"preserve\">".length();
+		index_text += preserve.length();
 
 		/** locate the end */
 		int end_text = page.indexOf("</text>");
